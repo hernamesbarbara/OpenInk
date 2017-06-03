@@ -1,13 +1,27 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8 -*- 
 
-ROOT="$(pwd)"
+_bump() {    
+    if [ -z "$1" ]
+      then
+        # no argument supplied. default to patch increment
+        release_string="patch"
+    else
+        release_string="$1"
+    fi
 
-cd ./OpenInk/
+    if mversion ; then
+        mversion "$release_string"
+    fi
+}
 
-if mversion ; then
-    mversion "$1"
-fi
+main() {
+    _ROOT=$(pwd)
+    cd ./OpenInk/
+    _bump "$1"
+    _exit_status="$?"
+    cd "$_ROOT"
+    exit "$_exit_status"
+}
 
-cd "$ROOT"
-
+main "$@"
