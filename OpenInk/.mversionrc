@@ -1,6 +1,5 @@
 {
     "commitMessage": "Bumped to %s",
-    "tagName": "v%s-src",
     "scripts": {
         "preupdate": "echo 'Bumping version...'",
         "precommit": "echo 'committing to git...'",
