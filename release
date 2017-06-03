@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*- 
+
+ROOT="$(pwd)"
+
+cd ./OpenInk/
+
+if mversion ; then
+    mversion "$1"
+fi
+
+cd "$ROOT"
+
