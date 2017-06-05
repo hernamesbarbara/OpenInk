@@ -17,7 +17,7 @@ _bump() {
 
 main() {
     _ROOT=$(pwd)
-    cd ./OpenInk/
+    cd ./openink/
     _bump "$1"
     _exit_status="$?"
     cd "$_ROOT"
