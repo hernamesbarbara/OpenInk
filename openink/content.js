@@ -1,17 +1,15 @@
-// content.js
-
-$('body').addClass("openink");
-$('div').addClass("openink");
-$('p').addClass("openink");
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if( request.message === "clicked_browser_action" ) {
-            var firstHref = $("a[href^='http']").eq(0).attr("href");
-            console.log(firstHref);
-        }
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    var res;
+    if (request.method == "getSelection") {
+        res = {data: window.getSelection().toString(), url: window.location.href}
     }
-);
-
-$("p.openink").select(function (e) { 
-    console.log('got here');
+    else {
+        res = {}
+    }
+    console.log("sending...");
+    sendResponse(res); // snub them.
 });
+
+
+s = window.getSelection()
+$('.'+s.baseNode.parentElement.parentElement.className.toString())
