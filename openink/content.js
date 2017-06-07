@@ -1,15 +1,7 @@
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    var res;
-    if (request.method == "getSelection") {
-        res = {data: window.getSelection().toString(), url: window.location.href}
-    }
-    else {
-        res = {}
-    }
-    console.log("sending...");
-    sendResponse(res); // snub them.
-});
+document.addEventListener('mouseup',function(event)
+{
+    var sel = window.getSelection().toString();
 
-
-s = window.getSelection()
-$('.'+s.baseNode.parentElement.parentElement.className.toString())
+    if(sel.length)
+        chrome.extension.sendRequest({'message':'setText','data': sel},function(response){})
+})
