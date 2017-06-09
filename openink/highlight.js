@@ -1,4 +1,4 @@
-
+console.log("highlight.js init");
 
 // https://stackoverflow.com/questions/40746567/chrome-extension-selected-text
 

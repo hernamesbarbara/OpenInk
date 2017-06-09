@@ -1,7 +1,7 @@
-function getSelectedText(req) {
+function parseResponse(req) {
     // handle any text data selected by the user and sent from content.js
     var res;
-    console.log("getSelectedText called in background.js");
+    console.log("parseResponse called in background.js");
     if (typeof req.data != "undefined" && req.data != "") {
         console.log("TODO: save data here...");
         console.log(req);
@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     else {
         switch (request.message) {
             case "submit_text":
-                res = getSelectedText(request);
+                res = parseResponse(request);
                 break;
 
             default:
@@ -49,3 +49,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
     sendResponse(res);
 });
+
+
