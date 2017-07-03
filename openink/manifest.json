@@ -1,21 +1,37 @@
 {
     "manifest_version": 2,
-
     "name": "OpenInk",
-    "description": "Web highlighter with local storage.",
-    "version": "0.0.5",
-    "background": {
-        "scripts": ["background.js"]
-    },
+    "description": "Highlight the web.",
+    "version": "0.0.1",
     "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "popup.html"
+        "default_title": "OpenInk",
+        "default_icon": "./img/icon.png"
     },
     "permissions": [
-        "activeTab"
+        "storage",
+        "activeTab",
+        "tabs",
+        "<all_urls>",
+        "file://*"
+
     ],
+    "background": {
+        "scripts": [
+            "./js/event.js"
+        ],
+        "persistent": false
+    },
     "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "js": ["highlight.js", "content.js"]
+        "matches": ["*://*/*", "file:///*"],
+        "js": [
+            "./js/jquery-3.2.1.min.js",
+            "./node_modules/rangy/lib/rangy-core.js",
+            "./node_modules/rangy/lib/rangy-classapplier.js",
+            "./node_modules/rangy/lib/rangy-highlighter.js",
+            "./node_modules/rangy/lib/rangy-selectionsaverestore.js",
+            "./node_modules/rangy/lib/rangy-serializer.js",
+            "./node_modules/rangy/lib/rangy-textrange.js"
+        ]
     }]
 }
+

@@ -1,9 +1,0 @@
-{
-    "commitMessage": "Bumped to %s",
-    "scripts": {
-        "preupdate": "echo 'Bumping version...'",
-        "precommit": "echo 'committing to git...'",
-        "postcommit": "git push",
-        "postupdate": "echo 'Updated to version %s in manifest files'"
-    }
-}
