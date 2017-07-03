@@ -286,5 +286,4 @@ deps/deps.jl
 
 
 resources.txt
-package-log.json
-openink/package-log.json
+
