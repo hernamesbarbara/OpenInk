@@ -14,10 +14,14 @@ function injectCss(tab) {
     });
 }
 
+function saveSelection(tab) {
+    chrome.tabs.executeScript(tab.id, {file: "./js/saveselection.js"});
+}
+
 function onUserHighlights(msg) {
     var el = msg.element;
     var text = msg.text;
-    var data = {element: el, text: text}
+    var data = {element: el, text: text};
     return (data)
 }
 
@@ -32,4 +36,8 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if (message.message == "user highlight") {
         data = onUserHighlights(message);
     }
+    saveSelection(sender.tab);
 });
+
+
+
