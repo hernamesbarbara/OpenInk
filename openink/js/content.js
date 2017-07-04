@@ -21,7 +21,6 @@ var highlightOpts = {
 
 highlighter.addClassApplier(rangy.createClassApplier("highlight", highlightOpts));
 
-
 if (serializedHighlights) {
     try {
         highlighter.deserialize(serializedHighlights);
@@ -48,12 +47,12 @@ function reloadPage(button) {
     button.form.submit();
 }
 
-function appendButton() {
+function appendButton(parent_element, button_label, button_id) {
     var tag = document.createElement('input');
-    tag.id = 'openink';
+    tag.id = button_id;
     tag.type = 'button';
-    tag.value = 'Click Here';
-    document.body.appendChild(tag);
+    tag.value = button_label;
+    parent_element.appendChild(tag);
 }
 
 function sendHighlights(highlightedElement) {
@@ -67,10 +66,31 @@ function sendHighlights(highlightedElement) {
     });
 }
 
-if (document.getElementById('openink') == null) {
-    appendButton();
+if (document.getElementById("openink-btn") == null) {
+    appendButton(document.body, "Highlight!", "openink-btn");
 }
 
-$('input#openink').click(function() {
+if (document.getElementById("openink-reload-btn") == null) {
+    var tag = document.createElement("form");
+    tag.id  = "openink-reload-form";
+    tag.action = window.location.href;
+    tag.method = "get";
+    document.body.appendChild(tag);
+    appendButton(tag, "Reload Page", "openink-reload-btn");
+}
+
+$("input#openink-btn").click(function() {
     sendHighlights(highlighter.highlightSelection("highlight")[0]);
+});
+
+var target;
+$("input#openink-reload-btn").click(function (evt) {
+    var payload = {
+        message: "reload page",
+        element: evt.target
+    };
+    console.log(evt.target);
+    chrome.runtime.sendMessage(payload, function (response) {
+        console.log(response);
+    });
 });

@@ -1,7 +1,7 @@
 console.log("event.js => init");
 
 function runContentJs(tab) {
-    var js = ["./js/content.js"];
+    var js = ["./js/jquery-3.2.1.min.js", "./js/content.js"];
     js.forEach(function (filename) {
         chrome.tabs.executeScript(tab.id, {file: filename});
     });
@@ -36,7 +36,10 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if (message.message == "user highlight") {
         data = onUserHighlights(message);
     }
-    saveSelection(sender.tab);
+    // saveSelection(sender.tab);
+    if (message.message == "reload page") {
+        console.log("reload page message received");
+    }
 });
 
 
