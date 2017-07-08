@@ -1,7 +1,17 @@
 console.log("content.js => init");
 
+if (document.getElementById("openink-tooltip") == null) {
+    var tag = document.createElement("div");
+    tag.id = "openink-tooltip";
+    document.body.appendChild(tag);
+}
+
+$("#openink-tooltip").load("../html/tooltip.html");
+
+console.log($("a")[0]);
+
 function getSerializedHighlights() {
-    var idx = window.location.search.indexOf("=")+1;
+    var idx = window.location.search.indexOf("=") + 1;
     var params = decodeURIComponent(window.location.search.slice(idx));
     return params;
 }
@@ -39,7 +49,9 @@ function removeHighlightFromSelectedText() {
 }
 
 function highlightScopedSelectedText() {
-    highlighter.highlightSelection("highlight", { containerElementId: "summary" });
+    highlighter.highlightSelection("highlight", {
+        containerElementId: "summary"
+    });
 }
 
 function reloadPage(button) {
@@ -65,32 +77,3 @@ function sendHighlights(highlightedElement) {
         console.log(response);
     });
 }
-
-if (document.getElementById("openink-btn") == null) {
-    appendButton(document.body, "Highlight!", "openink-btn");
-}
-
-if (document.getElementById("openink-reload-btn") == null) {
-    var tag = document.createElement("form");
-    tag.id  = "openink-reload-form";
-    tag.action = window.location.href;
-    tag.method = "get";
-    document.body.appendChild(tag);
-    appendButton(tag, "Reload Page", "openink-reload-btn");
-}
-
-$("input#openink-btn").click(function() {
-    sendHighlights(highlighter.highlightSelection("highlight")[0]);
-});
-
-var target;
-$("input#openink-reload-btn").click(function (evt) {
-    var payload = {
-        message: "reload page",
-        element: evt.target
-    };
-    console.log(evt.target);
-    chrome.runtime.sendMessage(payload, function (response) {
-        console.log(response);
-    });
-});

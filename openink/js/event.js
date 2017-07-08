@@ -1,12 +1,5 @@
 console.log("event.js => init");
 
-function runContentJs(tab) {
-    var js = ["./js/jquery-3.2.1.min.js", "./js/content.js"];
-    js.forEach(function (filename) {
-        chrome.tabs.executeScript(tab.id, {file: filename});
-    });
-}
-
 function injectCss(tab) {
     var css = ["./css/style.css"];
     css.forEach(function (filename) {
@@ -14,8 +7,20 @@ function injectCss(tab) {
     });
 }
 
-function saveSelection(tab) {
-    chrome.tabs.executeScript(tab.id, {file: "./js/saveselection.js"});
+function injectJs(tab, filename) {    
+    chrome.tabs.executeScript(tab.id, {file: filename});
+}
+
+function injectJquery(tab) {
+    injectJs(tab, "./js/jquery-3.2.1.min.js");
+}
+
+function injectTooltip(tab) {
+    injectJs(tab, "./js/injecttooltip.js");
+}
+
+function injectContent(tab) {
+    injectJs(tab, "./js/content.js");
 }
 
 function onUserHighlights(msg) {
@@ -25,20 +30,17 @@ function onUserHighlights(msg) {
     return (data)
 }
 
-// chrome.tabs.sendMessage(tab.id, {message: "init"}, function (res) {});
-
 chrome.browserAction.onClicked.addListener(injectCss);
-chrome.browserAction.onClicked.addListener(runContentJs);
+chrome.browserAction.onClicked.addListener(injectJquery);
+chrome.browserAction.onClicked.addListener(injectTooltip);
+chrome.browserAction.onClicked.addListener(injectContent);
+
 
 var data;
 chrome.runtime.onMessage.addListener(function (message, sender) {
     console.log(message);
     if (message.message == "user highlight") {
         data = onUserHighlights(message);
-    }
-    // saveSelection(sender.tab);
-    if (message.message == "reload page") {
-        console.log("reload page message received");
     }
 });
 

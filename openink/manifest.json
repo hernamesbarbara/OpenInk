@@ -31,7 +31,11 @@
             "./node_modules/rangy/lib/rangy-selectionsaverestore.js",
             "./node_modules/rangy/lib/rangy-serializer.js",
             "./node_modules/rangy/lib/rangy-textrange.js"
-        ]
-    }]
+        ],
+        "run_at": "document_end"
+    }],
+    "web_accessible_resources": [
+        "./html/tooltip.html",
+        "./img/*"
+    ]
 }
-
